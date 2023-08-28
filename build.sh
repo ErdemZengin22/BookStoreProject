@@ -4,9 +4,9 @@ echo "Starting build"
 
 npm install --omit=dev
 
-pushd client
+cd client
 npm install --omit=dev --legacy-peer-deps
 npm run build
-popd
+cd ../
 
 echo "Build complete"

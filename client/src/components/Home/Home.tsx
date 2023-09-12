@@ -1,79 +1,72 @@
 import { useState, useContext, useEffect, useCallback } from "react";
 import { AccessTokenContext } from "../../contexts/AccessTokenContext";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
-interface IUser {
-  id: number;
-  firstName: string;
-  lastName: string;
-  avatar: string;
+interface Ibook {
+  id: string;
+  title: string;
+  subtitle: string;
+  authors: string[];
+  description: string;
+  imageLinks: {
+    smallThumbnail: string;
+    thumbnail: string;
+  };
   [key: string]: any;
 }
 
-interface IUserResponse {
-  page: number;
-  perPage: number;
-  total: number;
-  totalPages: number;
-  data: IUser[];
+interface IbookResponse {
+  status: string;
+  books: Ibook[];
 }
 
 function Home() {
-  const [users, setUsers] = useState<IUser[]>([]);
+  const [books, setbooks] = useState<Ibook[]>([]);
   const [errorMessage, setErrorMessage] = useState("");
   /**
    * Getting access token from the Context API
    */
-  const { getToken, logout } = useContext(AccessTokenContext);
+  const {getToken} = useContext(AccessTokenContext);
 
-  const getUsers = useCallback(async () => {
+  const getbooks = useCallback(async () => {
     try {
-      const response = await axios.request<IUserResponse>({
+      const response = await axios.request<IbookResponse>({
         method: "GET",
-        url: "/api/users",
+        url: "/api/book/search/bookTitle",
         headers: {
           Authorization: `Bearer ${getToken()}`,
         },
       });
-      const users = response.data.data;
-      setUsers(users);
+      const booksData = response.data.books;
+      setbooks(booksData);
     } catch (error) {
       console.error(error);
-      /**
-       * If the response returns an HTTP status of 401 in this case, that means that the token has expired or is invalid.
-       * Ideally, we would want to refresh the JWT token
-       * but we need to be careful to get into a never ending loop.
-       */
       setErrorMessage("Oh no! An unexpected error occurred.");
     }
   }, [getToken]);
 
   useEffect(() => {
-    getUsers();
-  }, [getUsers]);
-
+    getbooks();
+  }, [getbooks]);
   return (
-    <div className="container mt-2 mb-5">
-      <div className="d-flex justify-content-between">
-        <h1 className="h2">You are logged in!</h1>
-        <button
-          type="button"
-          className="btn btn-primary mb-2"
-          onClick={() => logout()}
-        >
-          Logout
-        </button>
-      </div>
-      {users.map((user) => {
-        const key = `user-${user.id}`;
-        const name = `${user.firstName} ${user.lastName}`;
+    <div className="container">
+      <div className="home-body">
+      {books.map((book) => {
+        const key = `book-${book.id}`;
+        const title = `${book.title}`;
+        const thumbnail = book.imageLinks?.thumbnail || "https://placehold.jp/150x150.png";
+        const bookDetailLink = `/book/${book.id}`;
         return (
-          <div key={key}>
-            <img src={user.avatar} alt={name} />
-            <p>{name}</p>
+          <div key={key} className="book-item">
+            <Link to={bookDetailLink}>
+            <div><img src={thumbnail} alt={title} /></div>
+            <div><h4>{title}</h4></div>
+            </Link>
           </div>
         );
       })}
+      </div>
       {errorMessage && (
         <div className="alert alert-danger" role="alert">
           {errorMessage}

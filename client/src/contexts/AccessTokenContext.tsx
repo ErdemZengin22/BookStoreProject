@@ -58,6 +58,7 @@ export function AccessTokenProvider({ children }: AccessTokenProviderProps) {
    */
   const login = (token: string) => {
     setToken(token);
+    console.log(token);
   };
   /**
    * Logs the user out by clearing the token from state

@@ -1,0 +1,122 @@
+html, body {
+  padding:0;
+  margin:0;
+}
+*{
+  box-sizing: border-box;
+}
+h1, h2, h3, h4 {
+  margin:0;
+}
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .App-logo {
+    animation: App-logo-spin infinite 20s linear;
+  }
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.App-link {
+  color: #61dafb;
+}
+
+@keyframes App-logo-spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+.nav-cont {
+  width:100%;
+  background-color:cadetblue;
+  padding:20px;
+  .inner-container{
+    display:grid;
+  grid-template-columns: 33% 33% 33%;
+  width:600px;
+  justify-items: center;
+  margin:0 auto;
+  }
+}
+.home-top{
+  display:flex;
+  align-items: center;
+  justify-content: center;
+}
+.home-body{
+  display:grid;
+  grid-template-columns: 33% 33% 33%;
+  gap:20px;
+  width:600px;
+  margin:0 auto;
+}
+.book-item{
+  display:grid;
+  grid-template-rows:auto;
+  align-content: center;
+  justify-items: center;
+  flex-wrap: wrap;
+  gap:10px;
+  box-shadow:0px 0px 5px 5px rgba(0,0,0,0.1);
+  flex-basis: 100%;
+  padding:20px;
+  border-radius: 3px;
+}
+.book-details{
+  width:600px;
+  margin:20px auto;
+  padding:20px;
+  box-shadow:0px 0px 5px 5px rgba(0,0,0,0.1);
+  .book-detail-top{
+    display:flex;
+    flex-wrap: wrap;
+    gap:20px;
+  }
+}
+.login{
+  width:100%;
+  height: 100vh;
+  display:flex;
+  justify-content: center;
+  align-items: center;
+  .inner-container{
+    box-shadow:0px 0px 5px 5px rgba(0,0,0,0.1);
+    padding:20px;
+    border-radius: 3px;
+    h1{
+      text-align: center;
+      margin-bottom:20px;
+    }
+  }
+  .form-inline{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap:20px;
+  }
+  .form-group{
+    display:flex;
+    gap:15px;
+    justify-content: space-between;
+  }
+}

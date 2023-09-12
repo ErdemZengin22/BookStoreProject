@@ -1,12 +1,12 @@
 import { BrowserRouter } from "react-router-dom";
 import { AccessTokenProvider } from "./contexts/AccessTokenContext";
-import Router from "./components/Routing/Router";
+import Content from './Content';
 
 function App() {
   return (
     <BrowserRouter>
       <AccessTokenProvider>
-        <Router />
+      <Content />
       </AccessTokenProvider>
     </BrowserRouter>
   );

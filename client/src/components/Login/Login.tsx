@@ -29,7 +29,7 @@ function Login() {
     try {
       const response = await axios.request({
         method: "POST",
-        url: "/api/login",
+        url: "/api/signin",
         headers: {
           "Content-Type": "application/json",
         },
@@ -62,9 +62,10 @@ function Login() {
   };
 
   return (
-    <div className="container mt-2 mb-5">
+    <div className="login">
+      <div className="inner-container">
       <h1>Login</h1>
-      <form className="form-inline mb-2" method="POST" onSubmit={handleSubmit}>
+      <form className="form-inline" method="POST" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="username" className="mr-2">
             Username
@@ -72,7 +73,7 @@ function Login() {
           <input
             type="text"
             id="username"
-            className="form-control mr-3"
+            className="form-control"
             required={true}
             value={username}
             onChange={(e) => setUsername(e.target.value)}
@@ -85,7 +86,7 @@ function Login() {
           <input
             type="password"
             id="password"
-            className="form-control mr-3"
+            className="form-control"
             required={true}
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -95,18 +96,13 @@ function Login() {
           Login
         </button>
       </form>
-      <p className="form-text">
-        <small>
-          The username is <em>username</em> and the password is{" "}
-          <em>password</em>
-        </small>
-      </p>
       {isLoading && <p>Loading ...</p>}
       {errorMessage && (
         <div className="alert alert-danger" role="alert">
           {errorMessage}
         </div>
       )}
+      </div>
     </div>
   );
 }

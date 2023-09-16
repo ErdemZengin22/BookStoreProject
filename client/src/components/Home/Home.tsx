@@ -51,6 +51,9 @@ function Home() {
   }, [getbooks]);
   return (
     <div className="container">
+      <div className="home-top">
+        <h2>Welcome to the BookShelf Project!</h2>
+      </div>
       <div className="home-body">
       {books.map((book) => {
         const key = `book-${book.id}`;

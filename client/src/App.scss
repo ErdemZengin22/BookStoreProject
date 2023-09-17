@@ -1,6 +1,8 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap');
 html, body {
   padding:0;
   margin:0;
+  font-family: 'Merriweather', serif;
 }
 *{
   box-sizing: border-box;
@@ -48,14 +50,34 @@ h1, h2, h3, h4 {
 }
 .nav-cont {
   width:100%;
-  background-color:cadetblue;
+  background-color:rgb(9, 139, 122);
   padding:20px;
   .inner-container{
     display:grid;
   grid-template-columns: 33% 33% 33%;
   width:900px;
   justify-items: center;
+  align-items: center;
   margin:0 auto;
+  }
+}
+.nav-column{
+  a {
+    font-size:24px;
+    color:white;
+    text-decoration: none;
+    &:hover{
+      text-decoration: underline;
+    }
+  }
+  button{
+    font-size:24px;
+    background-color:#282c34;
+    color:white;
+    border:none;
+    border-radius: 3px;
+    padding:5px 15px;
+    cursor:pointer;
   }
 }
 .home-top{
@@ -90,11 +112,15 @@ h1, h2, h3, h4 {
   width:900px;
   margin:20px auto;
   padding:20px;
-  box-shadow:0px 0px 5px 5px rgba(0,0,0,0.1);
   .book-detail-top{
     display:flex;
     flex-wrap: wrap;
     gap:20px;
+  }
+  .book-detail-bottom{
+    display:flex;
+    flex-direction: column;
+    gap:10px;
   }
 }
 .login{
@@ -143,7 +169,11 @@ h1, h2, h3, h4 {
   .category{
     box-shadow:0px 0px 5px 5px rgba(0,0,0,0.1);
     padding:15px;
-    h2{
+    display:flex;
+    flex-wrap: wrap;
+    flex-direction: column;
+    gap:20px;
+    &>h2{
       margin-bottom:20px;
     }
   }
@@ -152,8 +182,58 @@ h1, h2, h3, h4 {
     gap:20px;
     border:1px solid #ccc;
     padding:5px;
+    background-color:antiquewhite;
     label{
       display:block;
     }
+    .book-shelf-item-col{
+      h2{
+        font-size:16px;
+        color:brown;
+        margin-top:-10px;
+      }
+      a{
+        text-decoration: none;
+        color:cornflowerblue;
+      }
+      
+    }
+    .book-shelf-item-col:last-child{
+      display:flex;
+      flex-direction: column;
+      gap:10px;
+    }
   }
+}
+.search-top{
+  input{
+    padding:10px;
+    font-size:22px;
+  }
+}
+.notification {
+  font-size:14px;
+  font-weight: 900;
+  color:rgb(0, 160, 67);
+  span{
+    color:black;
+  }
+}
+.current-shelf{
+  padding:5px;
+  border:1px solid #ccc;
+  width:max-content;
+  margin-bottom:5px;
+  span{
+    font-weight: 900;
+  }
+}
+.delete-button{
+  background-color:rgb(236, 104, 104);
+  border:1px solid  rgb(187, 10, 10);
+  color: rgb(94, 0, 0);
+  font-weight: bold;
+  padding:5px;
+  border-radius: 3px;
+  cursor:pointer;
 }

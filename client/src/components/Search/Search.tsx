@@ -3,6 +3,7 @@ import { AccessTokenContext } from "../../contexts/AccessTokenContext";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
+// Interface to define the expected structure of a book
 interface Ibook {
   id: string;
   title: string;
@@ -16,12 +17,14 @@ interface Ibook {
   [key: string]: any;
 }
 
+// Interface to define the expected structure of a book response
 interface IbookResponse {
   status: string;
   books: Ibook[];
 }
 
 function Search() {
+  // Various states to manage books, search queries, messages, and loading status.
   const [books, setBooks] = useState<Ibook[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -33,6 +36,7 @@ function Search() {
 
   const { getToken } = useContext(AccessTokenContext);
 
+  // Handles adding a book to a specific shelf.
   const handleAddToShelf = async (bookId: string, shelfKey: string) => {
     const token = getToken();
     const shelfNames: Record<string, string> = {
@@ -62,7 +66,8 @@ function Search() {
       setAddedBook(null);
     }
   };
-
+  
+// Fetches books based on the search query.
   const getBooks = useCallback(async () => {
     if (!searchQuery.trim()) return;
     setIsLoading(true);

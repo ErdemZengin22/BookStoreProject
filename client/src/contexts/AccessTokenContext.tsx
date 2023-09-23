@@ -1,14 +1,4 @@
 import { createContext, useState, ReactNode } from "react";
-
-/**
- * For using TypeScript and the Context API,
- * @see https://react-typescript-cheatsheet.netlify.app/docs/basic/getting-started/context
- */
-
-/**
- * This needs to match whatever is placed inside the "value" below.
- * @see <AccessTokenContext.Provider value={{ ... }) >
- */
 type AccessTokenContextType = {
   getToken: Function;
   hasToken: Function;
@@ -19,14 +9,8 @@ type AccessTokenContextType = {
 type AccessTokenProviderProps = {
   children: ReactNode;
 };
-
+// Create a context for handling access tokens.
 export const AccessTokenContext = createContext<AccessTokenContextType>(
-  /**
-   * This is to avoid type issues with TypeScript.
-   * If I don't do this, I am going to need to type check for "login"
-   * and all other functions wherever they are used.
-   * This needs to meet the "AccessTokenContextType" declaration above.
-   */
   {
     getToken: () => null,
     hasToken: () => null,
@@ -34,39 +18,20 @@ export const AccessTokenContext = createContext<AccessTokenContextType>(
     logout: () => null,
   }
 );
-
+// Provider component for the AccessTokenContext.
 export function AccessTokenProvider({ children }: AccessTokenProviderProps) {
-  /**
-   * Storing the JWT token in the Context API
-   */
+  // State management for the access token.
   const [token, setToken] = useState("");
-
-  /**
-   * @returns JWT token. Use to determine if the user is logged in.
-   */
+  // Define utility functions for token operations.
   const getToken = () => token;
-  /**
-   *
-   * @returns {boolean} whether or not the token is stored in the Context API.
-   * In other words, whether or not the user is logged in.
-   */
   const hasToken = (): boolean => !!token;
-
-  /**
-   * We login by setting the token.
-   * @param {string} token
-   */
   const login = (token: string) => {
     setToken(token);
-    console.log(token);
   };
-  /**
-   * Logs the user out by clearing the token from state
-   */
   const logout = () => {
     setToken("");
   };
-
+// Provide the context values to child components.
   return (
     <AccessTokenContext.Provider
       value={{

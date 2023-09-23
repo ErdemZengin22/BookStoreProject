@@ -3,6 +3,7 @@ import axios from "axios";
 import { AccessTokenContext } from "../../contexts/AccessTokenContext";
 import { Link } from "react-router-dom";
 
+// Define the shape of a book with TypeScript interfaces.
 interface IBook {
   id: string;
   title: string;
@@ -32,10 +33,14 @@ interface IBook {
   canonicalVolumeLink: string;
   shelf: "wantToRead" | "currentlyReading" | "read";
 }
+
+// Props definition for individual book items on a shelf.
 interface ShelfItemProps extends IBook {
   handleShelfChange: (bookId: string, newShelf: string) => void;
   handleBookDeletion: (bookId: string) => void;
 }
+
+// Props definition for a shelf of books.
 interface ShelfProps {
   shelfTitle: string;
   books: IBook[];
@@ -43,6 +48,7 @@ interface ShelfProps {
   handleBookDeletion: (bookId: string) => void;
 }
 
+// The ShelfItem component represents a single book on a shelf.
 const ShelfItem: React.FC<ShelfItemProps> = ({
   id,
   title,
@@ -51,6 +57,7 @@ const ShelfItem: React.FC<ShelfItemProps> = ({
   handleShelfChange,
   handleBookDeletion,
 }) => {
+  // Create a link to the book's detail page using its id.
   const bookDetailLink = `/book/${id}`;
   return (
     <div className="book-shelf-item">
@@ -93,6 +100,8 @@ const ShelfItem: React.FC<ShelfItemProps> = ({
     </div>
   );
 };
+
+// The Shelf component represents a category or section of books.
 const Shelf: React.FC<ShelfProps> = ({
   shelfTitle,
   books,
@@ -115,6 +124,8 @@ const Shelf: React.FC<ShelfProps> = ({
     )}
   </div>
 );
+
+// The main BookShelf component that manages and displays all the book shelves.
 function BookShelf() {
   const [shelfBooks, setShelfBooks] = useState<{
     wantToRead: IBook[];
@@ -127,8 +138,10 @@ function BookShelf() {
   });
   const [error, setError] = useState<string | null>(null);
 
+  // Get the token fetcher function from the context.
   const { getToken } = useContext(AccessTokenContext);
 
+  // This function fetches the user's bookshelf data from the server.
   const fetchBookshelfData = useCallback(async () => {
     try {
       const token = getToken();
@@ -146,6 +159,7 @@ function BookShelf() {
     }
   }, [getToken]);
 
+  // A handler function to change the shelf of a given book.
   const handleShelfChange = async (bookId: string, newShelf: string) => {
     const token = getToken();
     if (!token) {
@@ -170,10 +184,12 @@ function BookShelf() {
     }
   };
 
+  // Using the useEffect hook to fetch the bookshelf data when the component mounts.
   useEffect(() => {
     fetchBookshelfData();
   }, [fetchBookshelfData]);
 
+  // A handler function to delete a given book from the bookshelf.
   const handleBookDeletion = async (bookId: string) => {
     const token = getToken();
     if (!token) {

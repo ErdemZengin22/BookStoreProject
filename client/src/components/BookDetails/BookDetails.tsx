@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { AccessTokenContext } from "../../contexts/AccessTokenContext";
 import axios from "axios";
 
+// Interface to define the expected structure of a book
 interface IBook {
   id: string;
   title: string;
@@ -32,13 +33,18 @@ interface IBook {
   canonicalVolumeLink: string;
 }
 
+// BookDetails component shows detailed information about a selected book
 function BookDetails() {
+  // Using useParams to retrieve the bookId from the URL
   const { bookId } = useParams<{ bookId: string }>();
+  // Define local state using React hooks
   const [book, setBook] = useState<IBook | null>(null);
   const [userShelf, setUserShelf] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
   const { getToken } = useContext(AccessTokenContext);
   const [shelfChangedTo, setShelfChangedTo] = useState<string | null>(null);
+
+  // Mapping between shelf string identifiers and their formatted names
   const shelfDisplayNames: { [key: string]: string } = {
     wantToRead: "Want to Read",
     currentlyReading: "Currently Reading",
@@ -46,6 +52,7 @@ function BookDetails() {
   };
 
   useEffect(() => {
+    // Determine which shelf a book belongs to
     const determineBookShelf = (bookshelfData: any) => {
       for (const shelf in bookshelfData.books) {
         if (bookshelfData.books[shelf].some((b: IBook) => b.id === bookId)) {
@@ -54,6 +61,7 @@ function BookDetails() {
       }
       return null;
     };
+    // Fetch the selected book's data and the shelf it's on
     const fetchBookDataAndShelf = async () => {
       try {
         const bookResponse = await axios.get(`/api/book/${bookId}`);
@@ -70,10 +78,11 @@ function BookDetails() {
         setError((err as any).message || "An error occurred");
       }
     };
-
+// Invoke the fetch function on component mount
     fetchBookDataAndShelf();
-  }, [bookId, getToken]);
+  }, [bookId, getToken]); // Dependency array: re-run effect if either bookId or getToken changes
 
+  // Handler to move a book to a different shelf
   const handleShelfChange = async (newShelf: string) => {
     const token = getToken();
     if (!token) {
@@ -98,7 +107,8 @@ function BookDetails() {
       );
     }
   };
-
+  
+// Handler to remove a book from the user's shelves
   const handleBookDeletion = async () => {
     const token = getToken();
     if (!token) {

@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Login() {
+  // Utilize context and hooks to manage login state, navigation, and form inputs.
   const { login } = useContext(AccessTokenContext);
   const navigate = useNavigate();
   const [username, setUsername] = useState("");
@@ -11,12 +12,14 @@ function Login() {
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
 
+  // Handle form submission for login.
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
 
     setIsLoading(true);
 
     try {
+      // Make the POST request to authenticate the user.
       const response = await axios.request({
         method: "POST",
         url: "/api/signin",
@@ -34,6 +37,7 @@ function Login() {
       navigate("/bookshelf", { replace: true });
     } catch (error) {
       console.error(error);
+      // Handle potential errors, like invalid credentials or server issues.
       if (axios.isAxiosError(error) && error.response?.status === 401) {
         setErrorMessage("Invalid username or password");
       } else setErrorMessage("We are sorry, unexpected error occurred.");
